@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
         to.set_email("lytsing@hotmail.com");
         to.SerializeToString(&data);
         char bts[data.length()];
-        snprintf(bts, sizeof(bts), "%s", data.c_str());
+        sprintf(bts, "%s", data.c_str());
         send(connectfd, bts, sizeof(bts), 0);
 
         close(connectfd);
