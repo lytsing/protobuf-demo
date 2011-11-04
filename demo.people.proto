@@ -1,0 +1,11 @@
+package demo;
+
+option java_package = "com.example.tutorial";
+option java_outer_classname = "PersonProtos";
+
+message People {
+    required string name = 1;
+    required int32 id = 2;
+    required string email = 3;
+}
+
