@@ -29,16 +29,20 @@
 #include <string>
 #include <iostream>
 
-#include "demo.people.pb.h"
+#include "./demo.people.pb.h"
 
 #define PORT 8000
 #define MAXDATASIZE 4096
 #define BACKLOG 10
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
 
-int main(int argc, char *argv[]) {
-    int listenfd, connectfd, numbytes;
+int main(int argc, char** argv) {
+    int listenfd;
+    int connectfd;
+    int numbytes;
     char buf[MAXDATASIZE];
     struct sockaddr_in server;
     struct sockaddr_in client;
@@ -65,20 +69,20 @@ int main(int argc, char *argv[]) {
 
         numbytes = recv(connectfd, buf, MAXDATASIZE, 0);
         buf[numbytes] = '\0';
-        std::string a = buf;
+        string a = buf;
         cout << "You got a message from " << inet_ntoa(client.sin_addr) << endl;
-        cout << "Client Message: " << a << endl;
+        // cout << "Client Message: " << a << endl;
 
         // Receive  msg from clients
         demo::People p;
         p.ParseFromString(a);
-        cout << "People: " << endl;
-        cout << "Name: " << p.name() << endl;
-        cout << "ID: " << p.id() << endl;
-        cout << "Email: " << p.email() << endl;
+        cout << "People:\t" << endl;
+        cout << "Name:\t" << p.name() << endl;
+        cout << "ID:\t" << p.id() << endl;
+        cout << "Email:\t" << p.email() << endl;
 
         // Send msg to clients
-        std::string data;
+        string data;
         demo::People to;
         to.set_name("Lysting Huang");
         to.set_id(123);

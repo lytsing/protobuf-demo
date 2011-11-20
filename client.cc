@@ -26,26 +26,24 @@
 #include <netdb.h>
 #include <string>
 #include <iostream>
-#include "demo.people.pb.h"
+#include "./demo.people.pb.h"
 
-#define HOST "localhost"
+#define HOSTNAME "localhost"
 #define PORT 8000
 #define MAXDATASIZE 4096
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
 
-int main(int argc, char ** argv) {
-    int fd, numbytes;
+int main(int argc, char** argv) {
+    int fd;
+    int numbytes;
     char buf[MAXDATASIZE];
     struct hostent *he;
     struct sockaddr_in server;
 
-    if (argc != 2) {
-        printf("Usage: %s \"COMMAND\"\n", argv[0]);
-        exit(0);
-    }
-
-    he = gethostbyname(HOST);
+    he = gethostbyname(HOSTNAME);
     fd = socket(AF_INET, SOCK_STREAM, 0);
     bzero(&server, sizeof(server));
     server.sin_family = AF_INET;
@@ -54,18 +52,24 @@ int main(int argc, char ** argv) {
 
     connect(fd, (struct sockaddr *)&server, sizeof(struct sockaddr));
 
-    send(fd, argv[1], 20, 0);
+    string msg;
+    demo::People to;
+    to.set_name("violet");
+    to.set_email("violet@gmail.com");
+    to.set_id(1002);
+    to.SerializeToString(&msg);
+    sprintf(buf, "%s", msg.c_str());
+    send(fd, buf, sizeof(buf), 0);
 
     numbytes = recv(fd, buf, MAXDATASIZE, 0);
     buf[numbytes] = '\0';
-    cout << buf << endl;
     string data = buf;
     demo::People p;
     p.ParseFromString(data);
-    cout << "People: "  << endl;
-    cout << "Name: "    << p.name() << endl;
-    cout << "ID: "      << p.id() << endl;
-    cout << "Email: "   << p.email() << endl;
+    cout << "People:\t"  << endl;
+    cout << "Name:\t"    << p.name() << endl;
+    cout << "ID:\t"      << p.id() << endl;
+    cout << "Email:\t"   << p.email() << endl;
 
     close(fd);
     return 0;
