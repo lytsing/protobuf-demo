@@ -39,12 +39,15 @@ How to use
 -------------
 
 Open one terminal, start the server:
+
 $ ./s
 
 Open another terminal, run the client:
 
 $ ./c
+
 or
+
 $ java TestPeople
 
 
