@@ -1,4 +1,3 @@
-
 Protobuf demo
 ======================
 
@@ -19,7 +18,7 @@ Normal, it installed in /usr/local
 You need to export the environment variable, edit ~/.bashrc , add:
 
     export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-    export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig$PKG_CONFIG_PATH
+    export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 
 
 If you use Ubuntu, it is very easy to install:
